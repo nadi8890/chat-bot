@@ -510,12 +510,13 @@ function findAnswer(rawText) {
       const info = getCompanyInfo(v.company);
       const vehicleStr = v.make && v.model ? `${v.make} ${v.model}` : 'לא צוין';
       const plateStr = v.plate ? `מס' רכב: ${v.plate}` : '';
-      const km = v.nextService && v.currentKm ? `\n🔩 טיפול הבא: ${v.nextService} ק"מ (כיום: ${v.currentKm})` : v.nextService ? `\n🔩 טיפול הבא: ${v.nextService} ק"מ` : '';
+      const fmtDate = s => { if(!s||s==='0') return null; return `${s.substring(6,8)}.${s.substring(4,6)}.${s.substring(0,4)}`; };
+      const svcDate = v.nextService ? fmtDate(v.nextService) : null;
+      const km = svcDate ? `\n🔩 טיפול הבא: ${svcDate}` + (v.currentKm ? ` (ק"מ נוכחי: ${v.currentKm})` : '') : '';
       const ins = v.insExp ? `\n🛡️ תוקף ביטוח: ${v.insExp}` : '';
       const reg = v.regExp ? `\n📋 תוקף רישוי: ${v.regExp}` : '';
-      const lic = v.licenseExp ? `\n🪪 תוקף רישיון: ${v.licenseExp}` : '';
-      const insp = v.inspection ? `\n🔍 ביקורת קצב"ת: ${v.inspection}` : '';
-      return `👤 ${v.employee || 'לא צוין'}
+      const insp = v.inspection && v.inspection !== '0' ? `\n🔍 טיפול ב: ${v.inspection} ק"מ` : '';
+      return `👤 ${v.licenseExp || 'לא צוין'}
 🚗 ${v.make} ${v.model} (${v.year || 'שנתון לא ידוע'})
 🔢 מס\' רכב: ${v.plate}
 🏢 חברת ליסינג: ${info.name}
