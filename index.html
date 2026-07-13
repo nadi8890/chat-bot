@@ -190,6 +190,8 @@
   </div>
 </div>
 
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 <script>
 const POLICY = [
   {
@@ -363,7 +365,7 @@ const POLICY = [
   }
 ];
 
-const VEHICLES = [
+let VEHICLES = [
   {plate:'83945203',company:'נופר אנרגי',make:'מיצובישי',model:'אוטלנדר',year:'11.24',name:'צור גרונר-מטה',licDate:'27.4.27',regExp:'17/11/2026',insExp:'30/11/2026',nextService:'60000',currentKm:'45000',inspection:'13/4/26'},
   {plate:'83945203',company:'נופר אנרגי',make:'מיצובישי',model:'אוטלנדר',year:'11.24',name:'נתנאל חזן-ישראל',licDate:'30.10.26',regExp:'17/11/2026',insExp:'30/11/2026',nextService:'60000',currentKm:'45000',inspection:'13/4/26'},
   {plate:'65178203',company:'ליסקאר',make:'סיטרואן',model:'ברלינגו E BLUE',year:'3.24',name:'אור בידוש-ישראל',licDate:'05.08.60',regExp:'05/03/2027',insExp:'28/02/2027',nextService:'105000',currentKm:'90000',inspection:'05/07/2026'},
@@ -456,6 +458,45 @@ const VEHICLES = [
   {plate:'69151004',company:'שלמה סיקסט',make:'בי ווי די',model:'סיליון 5',year:'5.26',name:'גלעד אסף-ישראל',licDate:'29.10.30',regExp:'09/05/2027',insExp:'31/12/2026',nextService:'15000',currentKm:'',inspection:''},
   {plate:'69151004',company:'שלמה סיקסט',make:'בי ווי די',model:'סיליון 5',year:'5.26',name:'',licDate:'',regExp:'09/05/2027',insExp:'31/12/2026',nextService:'15000',currentKm:'',inspection:''}
 ];
+
+// ── סנכרון אוטומטי מול מנהל הצי (Firebase) ──
+// הבוט טוען את רשימת הרכבים מאותו מסד נתונים שמנהל הצי שומר אליו.
+// המערך הקבוע למעלה משמש רק כגיבוי אם אין חיבור.
+(function initFleetSync() {
+  try {
+    firebase.initializeApp({
+      apiKey: "AIzaSyDW6mzShTVBgHH-c5f0hb7FvIRophpgp78",
+      authDomain: "niholrechev.firebaseapp.com",
+      projectId: "niholrechev",
+      storageBucket: "niholrechev.firebasestorage.app",
+      messagingSenderId: "347809967171",
+      appId: "1:347809967171:web:af3eb5cdeefc827b41f8f6"
+    });
+    const mapVehicle = v => ({
+      plate: v.plate || '',
+      company: v.company || '',
+      make: v.make || '',
+      model: v.model || '',
+      year: v.year || '',
+      name: v.driverName || v.name || '',
+      licDate: v.licenseExpiry || v.licDate || '',
+      regExp: v.registrationExpiry || v.regExp || '',
+      insExp: v.insuranceExpiry || v.insExp || '',
+      nextService: v.nextServiceKm || v.nextService || '',
+      currentKm: v.currentKm || '',
+      inspection: v.inspection || ''
+    });
+    firebase.firestore().collection('fleet').doc('main').onSnapshot(snap => {
+      if (!snap.exists) return;
+      const d = snap.data();
+      if (Array.isArray(d.vehicles) && d.vehicles.length) {
+        VEHICLES = d.vehicles.map(mapVehicle);
+      }
+    }, err => console.warn('Fleet sync failed, using built-in list:', err));
+  } catch (e) {
+    console.warn('Firebase init failed, using built-in list:', e);
+  }
+})();
 
 function getCompanyInfo(company) {
   const c = company.trim().replace(/\s+/g,' ');
