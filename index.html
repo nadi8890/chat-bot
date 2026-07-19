@@ -524,11 +524,14 @@ function getCompanyInfo(company) {
 
 function lookupEmployee(text) {
   const clean = text.trim();
-  // Search by plate number
-  const byPlate = VEHICLES.filter(v => v.plate && v.plate.includes(clean));
-  if (byPlate.length > 0) return byPlate;
-  // Search by name
-  const byName = VEHICLES.filter(v => v.name && v.name.includes(clean));
+  // Search by plate number (digits only)
+  if (/\d{3,}/.test(clean)) {
+    const byPlate = VEHICLES.filter(v => v.plate && v.plate.includes(clean.replace(/\D/g,'')));
+    if (byPlate.length > 0) return byPlate;
+  }
+  // Search by name — only the real name part, before the dash
+  // (driver fields sometimes carry notes like "-ישראל- 2 צמיגים אחורה")
+  const byName = VEHICLES.filter(v => v.name && v.name.split('-')[0].trim().includes(clean));
   if (byName.length > 0) return byName;
   return null;
 }
