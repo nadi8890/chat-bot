@@ -192,6 +192,7 @@
 
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
 <script>
 const POLICY = [
   {
@@ -462,7 +463,7 @@ let VEHICLES = [
 // ── סנכרון אוטומטי מול מנהל הצי (Firebase) ──
 // הבוט טוען את רשימת הרכבים מאותו מסד נתונים שמנהל הצי שומר אליו.
 // המערך הקבוע למעלה משמש רק כגיבוי אם אין חיבור.
-(function initFleetSync() {
+(async function initFleetSync() {
   try {
     firebase.initializeApp({
       apiKey: "AIzaSyDW6mzShTVBgHH-c5f0hb7FvIRophpgp78",
@@ -486,6 +487,12 @@ let VEHICLES = [
       currentKm: v.currentKm || '',
       inspection: v.inspection || ''
     });
+    // Sign this browser in anonymously — invisible to the driver (no login screen).
+    // Gives the database an identity to check; failure is non-fatal and the bot
+    // falls back to its built-in list exactly as before.
+    try {
+      if (!firebase.auth().currentUser) await firebase.auth().signInAnonymously();
+    } catch(e) { console.warn('anon auth unavailable, continuing:', e.code || e.message); }
     firebase.firestore().collection('fleet').doc('main').onSnapshot(snap => {
       if (!snap.exists) return;
       const d = snap.data();
