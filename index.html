@@ -493,7 +493,9 @@ let VEHICLES = [
     try {
       if (!firebase.auth().currentUser) await firebase.auth().signInAnonymously();
     } catch(e) { console.warn('anon auth unavailable, continuing:', e.code || e.message); }
-    firebase.firestore().collection('fleet').doc('main').onSnapshot(snap => {
+    // per-company (tenant) data; defaults to nofar (first customer)
+    const TENANT = (new URLSearchParams(location.search).get('t') || 'nofar');
+    firebase.firestore().collection('tenants').doc(TENANT).collection('data').doc('main').onSnapshot(snap => {
       if (!snap.exists) return;
       const d = snap.data();
       if (Array.isArray(d.vehicles) && d.vehicles.length) {
