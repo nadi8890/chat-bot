@@ -491,7 +491,7 @@ let VEHICLES = [
     // Gives the database an identity to check; failure is non-fatal and the bot
     // falls back to its built-in list exactly as before.
     try {
-      if (!firebase.auth().currentUser) await firebase.auth().signInAnonymously();
+      if (!firebase.auth().currentUser) { try { await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE); } catch(e) {} await firebase.auth().signInAnonymously(); }
     } catch(e) { console.warn('anon auth unavailable, continuing:', e.code || e.message); }
     // per-company (tenant) data; defaults to nofar (first customer)
     const TENANT = (new URLSearchParams(location.search).get('t') || 'nofar');
