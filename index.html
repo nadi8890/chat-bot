@@ -366,99 +366,9 @@ const POLICY = [
   }
 ];
 
-let VEHICLES = [
-  {plate:'83945203',company:'נופר אנרגי',make:'מיצובישי',model:'אוטלנדר',year:'11.24',name:'צור גרונר-מטה',licDate:'27.4.27',regExp:'17/11/2026',insExp:'30/11/2026',nextService:'60000',currentKm:'45000',inspection:'13/4/26'},
-  {plate:'83945203',company:'נופר אנרגי',make:'מיצובישי',model:'אוטלנדר',year:'11.24',name:'נתנאל חזן-ישראל',licDate:'30.10.26',regExp:'17/11/2026',insExp:'30/11/2026',nextService:'60000',currentKm:'45000',inspection:'13/4/26'},
-  {plate:'65178203',company:'ליסקאר',make:'סיטרואן',model:'ברלינגו E BLUE',year:'3.24',name:'אור בידוש-ישראל',licDate:'05.08.60',regExp:'05/03/2027',insExp:'28/02/2027',nextService:'105000',currentKm:'90000',inspection:'05/07/2026'},
-  {plate:'65388703',company:'ליסקאר',make:'סיטרואן',model:'ברלינגו E BLUE',year:'4.24',name:'מתן לוי-ישראל',licDate:'25.2.29',regExp:'13/04/2026',insExp:'31/05/2027',nextService:'105000',currentKm:'90000',inspection:'1.2.26'},
-  {plate:'41608004',company:'שלמה סיקסט',make:'גאקו',model:'7',year:'10.25',name:'דניאל בוחבוט -ישראל',licDate:'21.12.27',regExp:'22/10/2026',insExp:'31/12/2026',nextService:'15000',currentKm:'',inspection:'4.6.26'},
-  {plate:'54818003',company:'שלמה סיקסט',make:'קיה',model:'סלטוס',year:'9.23',name:'הילה סגל -ישראל',licDate:'9.12.28',regExp:'20/09/2026',insExp:'31/12/2026',nextService:'',currentKm:'45000',inspection:'25.1.26'},
-  {plate:'89072103',company:'נופר אנרגי',make:'פורד',model:'f250',year:'9.24',name:'נתנאל חזות -ישראל',licDate:'15.9.57',regExp:'22/09/2026',insExp:'30/11/2026',nextService:'',currentKm:'36000',inspection:'05/07/2026'},
-  {plate:'83945303',company:'נופר אנרגי',make:'מיצובישי',model:'אאוטלנדר',year:'11.24',name:'אייל לוצאטו-מטה',licDate:'30.5.30',regExp:'17/11/2026',insExp:'30/11/2026',nextService:'60000',currentKm:'45000',inspection:'16.4.26'},
-  {plate:'14104704',company:'ליסקאר',make:'צ\'רי',model:'טיגו 7 פרו',year:'1.25',name:'יפתח שילה-ישראל',licDate:'2.6.27',regExp:'04/01/2027',insExp:'31/01/2027',nextService:'55000',currentKm:'40000',inspection:''},
-  {plate:'42009002',company:'נופר אנרגי',make:'רנו טורקיה',model:'גרנד קופה דיזל',year:'1.21',name:'אריאל אשר-ישראל',licDate:'10.9.28',regExp:'06/01/2027',insExp:'31/01/2027',nextService:'120000',currentKm:'100000',inspection:'05/07/2026'},
-  {plate:'59347603',company:'ליסקאר',make:'רנו טורקיה',model:'גרנד קופה דיזל',year:'1.24',name:'אוהד מויאל-ישראל',licDate:'19.11.27',regExp:'16/01/2027',insExp:'31/05/2027',nextService:'',currentKm:'40000',inspection:'05/07/2026'},
-  {plate:'45366702',company:'נופר אנרגי',make:'פורד',model:'אקספלורר',year:'5.21',name:'נעם פישר-מטה',licDate:'29.10.27',regExp:'01/05/2026',insExp:'30/04/2026',nextService:'225000',currentKm:'214000',inspection:'7.7.25'},
-  {plate:'83945503',company:'נופר אנרגי',make:'מיצובישי',model:'אאוטלנדר',year:'11.24',name:'אמיר אבנון-ישראל',licDate:'18.9.29',regExp:'17/11/2026',insExp:'30/11/2026',nextService:'60000',currentKm:'45000',inspection:'24.3.26'},
-  {plate:'65144703',company:'ליסקאר',make:'סיטרואן',model:'ברלינגו E BLUE',year:'3.24',name:'פיני בראט-ישראל',licDate:'27.07.67',regExp:'28/03/2027',insExp:'31/03/2027',nextService:'105000',currentKm:'90000',inspection:'05/07/2026'},
-  {plate:'31044104',company:'שלמה סיקסט',make:'מיצובישי',model:'אקליפס קרוס',year:'',name:'דני חנצינסקי-ישראל',licDate:'28.11.28',regExp:'18/06/2027',insExp:'31/12/2026',nextService:'',currentKm:'',inspection:''},
-  {plate:'59321401',company:'נופר אנרגי',make:'פורד',model:'F-350',year:'3.19',name:'יחיאל סלאמה-ישראל',licDate:'27.1.59',regExp:'30/03/2027',insExp:'28/02/2027',nextService:'335000',currentKm:'320000',inspection:'27.1.26'},
-  {plate:'55423702',company:'ליסקאר',make:'מ.ג',model:'EHS',year:'2.23',name:'לאוניד מרחסין-ישראל',licDate:'4.10.27',regExp:'22/02/2027',insExp:'31/03/2026',nextService:'120000',currentKm:'96000',inspection:'20.4.26'},
-  {plate:'41919404',company:'שלמה סיקסט',make:'גאקו',model:'5',year:'11.25',name:'מופז סלמן -ישראל',licDate:'25.2.30',regExp:'29/11/2026',insExp:'',nextService:'15000',currentKm:'7800',inspection:''},
-  {plate:'17053003',company:'ליסקאר',make:'קיה',model:'סלטוס',year:'7.22',name:'רפאל בן מלך-מטה',licDate:'15.10.28',regExp:'19/07/2026',insExp:'31/07/2026',nextService:'',currentKm:'39000',inspection:'26/4/26'},
-  {plate:'64782302',company:'ליסקאר',make:'קיה',model:'סטוניק',year:'7.21',name:'אליאנה ימין-מטה',licDate:'29.9.26',regExp:'05/07/2026',insExp:'31/07/2026',nextService:'',currentKm:'81000',inspection:'31.3.26'},
-  {plate:'59317703',company:'ליסקאר',make:'רנו',model:'מגאן',year:'1.24',name:'נדב דהן-ישראל',licDate:'15.3.30',regExp:'22/01/2027',insExp:'28/02/2027',nextService:'140000',currentKm:'120000',inspection:'9.6.26'},
-  {plate:'51631604',company:'שלמה סיקסט',make:'יונדאי',model:'אלנטרה',year:'11.22',name:'ניצן רגי\'אנו-מטה',licDate:'27.06.61',regExp:'06/01/2027',insExp:'31/12/2026',nextService:'15000',currentKm:'',inspection:''},
-  {plate:'31775004',company:'שלמה סיקסט',make:'מיצובישי',model:'אאוטלנדר',year:'8.25',name:'עופר אוברלנדר- מטה',licDate:'6.12.29',regExp:'16/08/2026',insExp:'31/12/2026',nextService:'',currentKm:'',inspection:''},
-  {plate:'75169702',company:'ליסקאר',make:'פיגו',model:'5008',year:'2.22',name:'זאב סונא -מטה',licDate:'18.7.60',regExp:'26/02/2027',insExp:'12/02/2027',nextService:'90000',currentKm:'75000',inspection:'15.2.26'},
-  {plate:'65723504',company:'שלמה סיקסט',make:'אומודה',model:'9',year:'5.26',name:'תמי פישמן- מטה',licDate:'19.1.30',regExp:'05/05/2027',insExp:'31/12/2026',nextService:'15000',currentKm:'',inspection:''},
-  {plate:'39230904',company:'שלמה סיקסט',make:'צ\'רי',model:'טיגו 8 פרו',year:'8.25',name:'אלירן אביטן-ישראל',licDate:'19.12.26',regExp:'16/08/2026',insExp:'31/12/2026',nextService:'45000',currentKm:'30000',inspection:'31.3.26'},
-  {plate:'75392504',company:'הרץ',make:'גי\'לי',model:'סטאריי',year:'6.26',name:'מתן אטיאס-מטה',licDate:'28.9.58',regExp:'16/06/2027',insExp:'31/05/2027',nextService:'15000',currentKm:'',inspection:''},
-  {plate:'59317903',company:'ליסקאר',make:'רנו טורקיה',model:'מגאן',year:'1.24',name:'עדי גלסמן-ישראל',licDate:'12.12.30',regExp:'10/01/2027',insExp:'28/02/2027',nextService:'120000',currentKm:'100000',inspection:'31.8.25'},
-  {plate:'59124103',company:'ליסקאר',make:'דאצ\'יה',model:'דסטר',year:'10.23',name:'שחר כהן-ישראל',licDate:'10.9.31',regExp:'17/10/2026',insExp:'31/10/2026',nextService:'140000',currentKm:'120000',inspection:'05/07/2026'},
-  {plate:'23243904',company:'שלמה סיקסט',make:'מיצובישי',model:'אאוטלנדר',year:'2.25',name:'הדס גל -מטה',licDate:'8.10.26',regExp:'25/02/2027',insExp:'31/12/2026',nextService:'30000',currentKm:'15000',inspection:'6.4.26'},
-  {plate:'24889203',company:'שלמה סיקסט',make:'יונדאי',model:'אלנטרה',year:'2.23',name:'אלה מרשאק -מטה',licDate:'11.9.30',regExp:'18/02/2027',insExp:'31/12/2026',nextService:'75000',currentKm:'60000',inspection:'25.1.26'},
-  {plate:'57691303',company:'שלמה סיקסט',make:'יונדאי',model:'אלנטרה',year:'1.1.24',name:'ציון יחזקאל-ישראל',licDate:'20.8.60',regExp:'31/12/2026',insExp:'31/12/2026',nextService:'60000',currentKm:'45000',inspection:'14.12.25'},
-  {plate:'34002803',company:'שלמה סיקסט',make:'יונדאי',model:'אלנטרה',year:'4.23',name:'ג\'מיל פאחורי -ישראל',licDate:'22.4.57',regExp:'12/04/2027',insExp:'31/12/2026',nextService:'75000',currentKm:'60000',inspection:'30.12.25'},
-  {plate:'43688603',company:'שלמה סיקסט',make:'קיה',model:'סלטוס',year:'4.23',name:'קרן  גרינוולד/סבג-מטה',licDate:'11.2.54',regExp:'26/04/2027',insExp:'31/12/2026',nextService:'60000',currentKm:'45000',inspection:'11.1.26'},
-  {plate:'44373703',company:'שלמה סיקסט',make:'קיה',model:'סלטוס',year:'5.23',name:'רותם שמר -מטה',licDate:'3.9.59',regExp:'22/05/2027',insExp:'31/12/2026',nextService:'60000',currentKm:'45000',inspection:'5.1.26'},
-  {plate:'20036203',company:'שלמה סיקסט',make:'יונדאי',model:'אלנטרה',year:'2.23',name:'אורטל ביאלסקי-ישראל',licDate:'10.9.63',regExp:'07/02/2027',insExp:'31/12/2026',nextService:'105000',currentKm:'90000',inspection:'12.2.26'},
-  {plate:'58613404',company:'שלמה סיקסט',make:'יונדאי',model:'אלנטרה',year:'6.27',name:'רשף אגרנוב-מטה',licDate:'17.11.26',regExp:'15/03/2027',insExp:'31/12/2026',nextService:'15000',currentKm:'',inspection:''},
-  {plate:'24889303',company:'שלמה סיקסט',make:'יונדאי',model:'אלנטרה',year:'2.23',name:'אסף גבעון -ישראל',licDate:'10.12.30',regExp:'18/02/2027',insExp:'31/12/2026',nextService:'120000',currentKm:'105000',inspection:'1.2.26'},
-  {plate:'34002703',company:'שלמה סיקסט',make:'יונדאי',model:'אלנטרה',year:'4.23',name:'יוסף הירש-מטה',licDate:'10.9.26',regExp:'12/04/2027',insExp:'31/12/2026',nextService:'60000',currentKm:'45000',inspection:'8.2.26'},
-  {plate:'34005603',company:'שלמה סיקסט',make:'יונדאי',model:'אלנטרה',year:'4.23',name:'סופי בלקסטון-מטה',licDate:'30.6.26',regExp:'25/01/2049',insExp:'31/12/2026',nextService:'60000',currentKm:'43478',inspection:'11.1.26'},
-  {plate:'34005503',company:'שלמה סיקסט',make:'יונדאי',model:'אלנטרה',year:'3.23',name:'ג\'ואנה סטרוק -ישראל',licDate:'23.8.26',regExp:'28/03/2027',insExp:'31/12/2025',nextService:'75000',currentKm:'60000',inspection:'23.4.26'},
-  {plate:'69014004',company:'שלמה סיקסט',make:'בי ווי די',model:'אטו 2',year:'4.26',name:'יריב טולדנו-מטה',licDate:'14.6.28',regExp:'12/04/2027',insExp:'31/12/2026',nextService:'15000',currentKm:'',inspection:''},
-  {plate:'65371104',company:'שלמה סיקסט',make:'אופל',model:'פרונטרה',year:'5.26',name:'רון אלקיים-ישראל',licDate:'21.7.59',regExp:'19/02/2027',insExp:'31/12/2026',nextService:'15000',currentKm:'',inspection:''},
-  {plate:'55211904',company:'שלמה סיקסט',make:'צרי',model:'טיגו 7 פרו',year:'1.26',name:'גיא הרטשטיין -מטה',licDate:'1.7.26',regExp:'07/01/2027',insExp:'31/12/2026',nextService:'',currentKm:'',inspection:''},
-  {plate:'42934404',company:'שלמה סיקסט',make:'טויוטה',model:'יאריס קרוס',year:'2.26',name:'מאיה כתבי-מטה',licDate:'14.7.61',regExp:'24/02/2027',insExp:'31/12/2026',nextService:'30000',currentKm:'15000',inspection:''},
-  {plate:'64616304',company:'שלמה סיקסט',make:'צרי',model:'טיגו 4',year:'4.26',name:'רעות בן עזרי-ישראל',licDate:'15.10.57',regExp:'12/04/2027',insExp:'31/12/2026',nextService:'15000',currentKm:'',inspection:''},
-  {plate:'74254104',company:'שלמה סיקסט',make:'צרי',model:'טיגו 4',year:'5.26',name:'שמרית טביב-ישראל',licDate:'9.7.30',regExp:'25/05/2027',insExp:'31/12/2026',nextService:'15000',currentKm:'',inspection:''},
-  {plate:'49135504',company:'שלמה סיקסט',make:'צ\'רי',model:'טיגו 8 פרו',year:'11.25',name:'גוסטבו רוצ\'מן-מטה',licDate:'09.10.26',regExp:'02/11/2026',insExp:'31/12/2026',nextService:'30000',currentKm:'15000',inspection:'27.4.26'},
-  {plate:'58155204',company:'ליסקאר',make:'גאקו',model:'5',year:'2.26',name:'יוחאי תירוש-ישראל',licDate:'30.11.27',regExp:'01/02/2027',insExp:'31/01/2027',nextService:'15000',currentKm:'',inspection:''},
-  {plate:'58649404',company:'הרץ',make:'יונדאי',model:'אלנטרה',year:'6.26',name:'דוד כהן-ישראל',licDate:'31.1.31',regExp:'03/06/2027',insExp:'31/05/2027',nextService:'15000',currentKm:'',inspection:''},
-  {plate:'25062302',company:'נופר אנרגי',make:'',model:'נגרר',year:'',name:'נגרר-ישראל',licDate:'',regExp:'06/10/2026',insExp:'30/09/2026',nextService:'',currentKm:'',inspection:'26.5.26'},
-  {plate:'75169802',company:'ליסקאר',make:'פיג\'ו',model:'5008',year:'2.22',name:'טל דין-מטה',licDate:'2.8.29',regExp:'26/02/2027',insExp:'12/02/2027',nextService:'',currentKm:'135000',inspection:'10.6.26'},
-  {plate:'64749904',company:'ליסקאר',make:'בי ווי די',model:'סיליון 5',year:'3.26',name:'צליל אזולאי-ישראל',licDate:'08.6.56',regExp:'15/03/2027',insExp:'30/04/2027',nextService:'15000',currentKm:'',inspection:''},
-  {plate:'83945403',company:'נופר אנרגי',make:'מיצובישי',model:'אאוטלנדר',year:'11.24',name:'אתי חן-ישראל',licDate:'18.7.28',regExp:'17/11/2026',insExp:'30/11/2026',nextService:'45000',currentKm:'30000',inspection:'04/12/2026'},
-  {plate:'58185503',company:'נופר אנרגי',make:'דאצ\'יה',model:'דסטר',year:'9.23',name:'עדיאל בר משה-ישראל',licDate:'31.8.31',regExp:'06/09/2026',insExp:'31/08/2026',nextService:'140000',currentKm:'120000',inspection:'05/07/2026'},
-  {plate:'45517203',company:'שלמה סיקסט',make:'טויוטה',model:'קורולה',year:'5.23',name:'צחי רייך- ישראל',licDate:'5.4.28',regExp:'10/05/2027',insExp:'31/12/2026',nextService:'60000',currentKm:'45000',inspection:'11.11.25'},
-  {plate:'23487304',company:'שלמה סיקסט',make:'גאקו',model:'7',year:'',name:'רותם סודרי',licDate:'5.12.26',regExp:'',insExp:'',nextService:'',currentKm:'',inspection:''},
-  {plate:'66020804',company:'שלמה סיקסט',make:'יונדאי',model:'קונה',year:'5.26',name:'מעיין אס-מטה',licDate:'6.10.57',regExp:'18/05/2027',insExp:'31/12/2026',nextService:'15000',currentKm:'',inspection:''},
-  {plate:'49136704',company:'שלמה סיקסט',make:'צרי',model:'טיגו 8 פרו',year:'11.25',name:'אסי כהן- מטה',licDate:'9.9.30',regExp:'04/11/2026',insExp:'31/12/2026',nextService:'15000',currentKm:'',inspection:'30.4.26'},
-  {plate:'23244204',company:'שלמה סיקסט',make:'מיצובישי',model:'אאוטלנדר',year:'2.25',name:'יותם מן -ישראל',licDate:'15.8.30',regExp:'24/02/2027',insExp:'31/12/2026',nextService:'30000',currentKm:'15000',inspection:'9.4.26'},
-  {plate:'50298904',company:'ליסקאר',make:'טויוטה',model:'אייגו X',year:'1.26',name:'גילי אלמגור-מטה',licDate:'10.09.28',regExp:'10/01/2027',insExp:'31/01/2027',nextService:'15000',currentKm:'',inspection:'6.4.26'},
-  {plate:'64792303',company:'ליסקאר',make:'קיה',model:'סלטוס',year:'1.24',name:'מתן סידי-מטה',licDate:'02.12.29',regExp:'28/01/2027',insExp:'31/01/2027',nextService:'60000',currentKm:'45000',inspection:'7.1.26'},
-  {plate:'68707503',company:'שלמה סיקסט',make:'קיה',model:'סלטוס',year:'',name:'נעמה לוק-ישראל',licDate:'02.11.27',regExp:'27/05/2026',insExp:'31/12/2026',nextService:'',currentKm:'',inspection:'04/12/2026'},
-  {plate:'56728804',company:'ליסקאר',make:'צרי',model:'טיגו 4',year:'2.26',name:'עתליה-ישראל',licDate:'11.2.2031',regExp:'31/07/2027',insExp:'31/01/2027',nextService:'15000',currentKm:'',inspection:''},
-  {plate:'24164804',company:'נופר אנרגי',make:'סקודה',model:'קודיאק',year:'2.25',name:'נדב ברקן-ישראל',licDate:'09.07.29',regExp:'03/02/2027',insExp:'31/01/2027',nextService:'45000',currentKm:'30000',inspection:'05/06/2026'},
-  {plate:'83143703',company:'ליסקאר',make:'סובארו',model:'פורסטר',year:'8.24',name:'מוטי עמנואל-ישראל',licDate:'4.8.28',regExp:'24/08/2026',insExp:'31/08/2026',nextService:'100000',currentKm:'83000',inspection:'20.11.25'},
-  {plate:'15539804',company:'ליסקאר',make:'טויוטה',model:'סיטי',year:'1.25',name:'דניאל כחלון- ישראל',licDate:'24.4.30',regExp:'01/01/2027',insExp:'28/02/2027',nextService:'75000',currentKm:'60000',inspection:'10.6.26'},
-  {plate:'58612704',company:'שלמה סיקסט',make:'יונדאי',model:'אלנטרה',year:'6.26',name:'קיילי פרכטמן- מטה',licDate:'8.3.59',regExp:'03/06/2027',insExp:'31/12/2026',nextService:'15000',currentKm:'',inspection:''},
-  {plate:'67537803',company:'שלמה סיקסט',make:'טויוטה',model:'קורולה',year:'4.24',name:'ליאור ברון -ישראל',licDate:'24.11.28',regExp:'16/04/2027',insExp:'31/12/2026',nextService:'75000',currentKm:'60000',inspection:'15.2.26'},
-  {plate:'19958504',company:'ליסקאר',make:'צ\'רי',model:'טיגו 7 פרו',year:'4.25',name:'דותן סלע-ישראל',licDate:'27.9.26',regExp:'02/04/2027',insExp:'30/04/2027',nextService:'60000',currentKm:'45000',inspection:'15.4.26'},
-  {plate:'29460304',company:'שלמה סיקסט',make:'קיי גיי',model:'רקסטון',year:'6.25',name:'אריאל ריבני-ישראל',licDate:'16.6.30',regExp:'09/06/2026',insExp:'31/12/2026',nextService:'40000',currentKm:'20000',inspection:'9.4.26'},
-  {plate:'34709004',company:'שלמה סיקסט',make:'צ\'רי',model:'טיגו 8 פרו',year:'7.25',name:'אורן בן שימול-ישראל',licDate:'18.11.26',regExp:'08/07/2026',insExp:'31/12/2026',nextService:'30000',currentKm:'15000',inspection:'31.3.26'},
-  {plate:'17053103',company:'ליסקאר',make:'קיה',model:'סלטוס',year:'7.22',name:'אליעד אבן חן -מטה',licDate:'26.9.59',regExp:'16/07/2026',insExp:'31/07/2026',nextService:'',currentKm:'75000',inspection:'24.3.26'},
-  {plate:'39060104',company:'שלמה סיקסט',make:'צ\'רי',model:'טיגו 8 פרו',year:'8.25',name:'נועה בית דגן-מטה',licDate:'19.11.29',regExp:'05/08/2026',insExp:'31/12/2026',nextService:'',currentKm:'',inspection:'23.6.26'},
-  {plate:'35637204',company:'שלמה סיקסט',make:'מ.ג',model:'ehs',year:'12.25',name:'מתי אשכנזי -ישראל',licDate:'17.7.27',regExp:'02/12/2026',insExp:'31/12/2026',nextService:'24000',currentKm:'',inspection:'17.2.26'},
-  {plate:'56863904',company:'שלמה סיקסט',make:'צ\'רי',model:'טיגו 7 פרו',year:'1.26',name:'רועי קרבל-מטה',licDate:'5.2.28',regExp:'25/01/2027',insExp:'31/12/2026',nextService:'15000',currentKm:'',inspection:''},
-  {plate:'36430104',company:'שלמה סיקסט',make:'גאקו',model:'7',year:'9.25',name:'צור לנס -מטה',licDate:'17.12.26',regExp:'29/09/2026',insExp:'31/12/2026',nextService:'30000',currentKm:'19082',inspection:'17.5.26'},
-  {plate:'42935204',company:'שלמה סיקסט',make:'טויוטה',model:'יאריס קרוס',year:'2.26',name:'מיגל ממן- מטה',licDate:'19.8.26',regExp:'25/02/2027',insExp:'31/12/2026',nextService:'15000',currentKm:'',inspection:''},
-  {plate:'24227404',company:'שלמה סיקסט',make:'סקודה',model:'אוקטביה',year:'2.25',name:'שירה גרינבואים- ישראל',licDate:'17.1.59',regExp:'19/02/2027',insExp:'31/12/2026',nextService:'15000',currentKm:'13000',inspection:''},
-  {plate:'49136604',company:'שלמה סיקסט',make:'צרי',model:'טיגו 8 פרו',year:'11.25',name:'שגיא סנדלר -מטה',licDate:'30.12.28',regExp:'04/11/2026',insExp:'31/12/2026',nextService:'15000',currentKm:'7812',inspection:'17.5.26'},
-  {plate:'56314403',company:'שלמה סיקסט',make:'בי ווי די',model:'סיליון 5',year:'3.26',name:'הגר שוקרון- ישראל',licDate:'3.11.26',regExp:'10/03/2027',insExp:'31/12/2026',nextService:'15000',currentKm:'',inspection:''},
-  {plate:'68704303',company:'שלמה סיקסט',make:'קיה',model:'סלטוס',year:'',name:'אוהד הורבך-מטה',licDate:'21.6.58',regExp:'27/05/2027',insExp:'31/12/2026',nextService:'30000',currentKm:'24000',inspection:''},
-  {plate:'30803603',company:'הרץ',make:'לינק אנד קו',model:'1',year:'9.23',name:'ניסים אזגרי-מטה',licDate:'3.7.27',regExp:'05/09/2026',insExp:'31/08/2026',nextService:'105000',currentKm:'91129',inspection:''},
-  {plate:'56313004',company:'שלמה סיקסט',make:'בי ווי די',model:'סיליון 5',year:'3.26',name:'ספיר אזאצ\'י- ישראל',licDate:'13.12.30',regExp:'10/03/2027',insExp:'31/12/2026',nextService:'15000',currentKm:'',inspection:''},
-  {plate:'18744204',company:'הרץ',make:'מאזדה',model:'3',year:'1.25',name:'רוני פינסקי-ישראל',licDate:'18.5.62',regExp:'01/01/2027',insExp:'31/12/2026',nextService:'60000',currentKm:'45000',inspection:''},
-  {plate:'69152104',company:'שלמה סיקסט',make:'בי ווי די',model:'סיליון 5',year:'5.26',name:'נמרוד זוהר-מטה',licDate:'27.9.26',regExp:'09/05/2027',insExp:'31/12/2026',nextService:'15000',currentKm:'',inspection:''},
-  {plate:'65608004',company:'שלמה סיקסט',make:'גאקו',model:'8',year:'5.26',name:'אלעד מיכאלי-מטה',licDate:'28.02.30',regExp:'03/05/2027',insExp:'31/12/2026',nextService:'15000',currentKm:'',inspection:''},
-  {plate:'43863903',company:'הרץ',make:'קיה',model:'סלטוס',year:'3.23',name:'לילה חודש-ישראל',licDate:'15.12.53',regExp:'27/03/2027',insExp:'28/02/2027',nextService:'90000',currentKm:'85000',inspection:''},
-  {plate:'88580302',company:'הרץ',make:'יונדאי',model:'אלנטרה',year:'3.24',name:'שני דדון-ישראל',licDate:'19.5.31',regExp:'13/03/2027',insExp:'28/02/2027',nextService:'75000',currentKm:'63292',inspection:''},
-  {plate:'69151004',company:'שלמה סיקסט',make:'בי ווי די',model:'סיליון 5',year:'5.26',name:'גלעד אסף-ישראל',licDate:'29.10.30',regExp:'09/05/2027',insExp:'31/12/2026',nextService:'15000',currentKm:'',inspection:''},
-  {plate:'69151004',company:'שלמה סיקסט',make:'בי ווי די',model:'סיליון 5',year:'5.26',name:'',licDate:'',regExp:'09/05/2027',insExp:'31/12/2026',nextService:'15000',currentKm:'',inspection:''}
-];
+// זהות החברה (דייר) — מגיע מ-?t=... בקישור; ברירת מחדל nofar
+const TENANT = (new URLSearchParams(location.search).get('t') || 'nofar');
+let VEHICLES = [];  // ריק — נטען לפי חברה מ-Firebase (בידוד רב-דיירתי)
 
 // ── סנכרון אוטומטי מול מנהל הצי (Firebase) ──
 // הבוט טוען את רשימת הרכבים מאותו מסד נתונים שמנהל הצי שומר אליו.
@@ -494,14 +404,12 @@ let VEHICLES = [
       if (!firebase.auth().currentUser) { try { await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE); } catch(e) {} await firebase.auth().signInAnonymously(); }
     } catch(e) { console.warn('anon auth unavailable, continuing:', e.code || e.message); }
     // per-company (tenant) data; defaults to nofar (first customer)
-    const TENANT = (new URLSearchParams(location.search).get('t') || 'nofar');
     firebase.firestore().collection('tenants').doc(TENANT).collection('data').doc('main').onSnapshot(snap => {
-      if (!snap.exists) return;
+      if (!snap.exists) { VEHICLES = []; return; }
       const d = snap.data();
-      if (Array.isArray(d.vehicles) && d.vehicles.length) {
-        VEHICLES = d.vehicles.map(mapVehicle);
-      }
-    }, err => console.warn('Fleet sync failed, using built-in list:', err));
+      // תמיד מסתנכרן לרשימת החברה — כולל רשימה ריקה (בידוד: אין דליפה בין חברות)
+      VEHICLES = Array.isArray(d.vehicles) ? d.vehicles.map(mapVehicle) : [];
+    }, err => console.warn('Fleet sync failed:', err));
   } catch (e) {
     console.warn('Firebase init failed, using built-in list:', e);
   }
@@ -588,9 +496,12 @@ ${info.tire}`;
   }
 
   // --- Policy Q&A ---
+  // בסיס הידע (נהלי ליסינג/תדלוק/בטיחות) שייך לנופר בלבד.
+  // לחברות אחרות: רק חיפוש רכבים + הפניה למחלקת הרכב שלהן.
+  const KB = (TENANT === 'nofar') ? POLICY : [];
   const text = rawText.toLowerCase();
   let best = null, bestScore = 0;
-  for (const item of POLICY) {
+  for (const item of KB) {
     let score = 0;
     for (const kw of item.keywords) {
       if (text.includes(kw.toLowerCase())) score++;
