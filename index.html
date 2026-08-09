@@ -403,8 +403,9 @@ let VEHICLES = [];  // ריק — נטען לפי חברה מ-Firebase (בידו
     try {
       if (!firebase.auth().currentUser) { try { await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE); } catch(e) {} await firebase.auth().signInAnonymously(); }
     } catch(e) { console.warn('anon auth unavailable, continuing:', e.code || e.message); }
-    // per-company (tenant) data; defaults to nofar (first customer)
-    firebase.firestore().collection('tenants').doc(TENANT).collection('data').doc('main').onSnapshot(snap => {
+    // per-company (tenant) data; defaults to nofar (first customer).
+    // קורא מהעותק הציבורי המסונן (pubroster) — בלי מידע רגיש (ת"ז/טלפון/ילדים/עבר תעבורתי)
+    firebase.firestore().collection('tenants').doc(TENANT).collection('data').doc('pubroster').onSnapshot(snap => {
       if (!snap.exists) { VEHICLES = []; return; }
       const d = snap.data();
       // תמיד מסתנכרן לרשימת החברה — כולל רשימה ריקה (בידוד: אין דליפה בין חברות)
