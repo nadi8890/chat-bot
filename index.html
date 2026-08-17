@@ -177,6 +177,7 @@
     <button class="quick-btn" onclick="sendQuick('שטיפומט - איך שוטפים את הרכב?')">🚿 שטיפה</button>
     <button class="quick-btn" onclick="sendQuick('איך טוענים רכב חשמלי?')">⚡ טעינה חשמלית</button>
     <button class="quick-btn" onclick="focusAndHint()">🔍 חפש לפי מספר רכב</button>
+    <button class="quick-btn" onclick="sendQuick('המסמכים שלי')">📁 המסמכים שלי</button>
   </div>
 
   <div class="chat-input-area">
@@ -460,6 +461,11 @@ function getTime() {
 document.getElementById('init-time').textContent = getTime();
 
 function findAnswer(rawText) {
+  // --- מסמכים אישיים → הפניה לפורטל המאובטח ---
+  if (/(המסמכים שלי|מסמכים שלי|רישיון נהיגה|רישיון הרכב|רישיון רכב|תעודת ביטוח|הביטוח שלי|לצפות במסמכים|לראות (?:את )?המסמכים|התיק שלי|נהלים שלי)/.test(rawText)) {
+    const link = `https://nadi8890.github.io/shamay-scan/my-docs.html?t=${encodeURIComponent(TENANT)}`;
+    return `📁 לצפייה במסמכים שלך — רישיון נהיגה, רישיון רכב, ביטוח ונהלים — היכנס/י לפורטל האישי המאובטח:\n\n${link}\n\n🔐 מזדהים עם המייל שלך (יישלח קישור כניסה, בלי סיסמה) — ורואים רק את המסמכים שלך.`;
+  }
   // --- Employee lookup ---
   // Try to find employee name in message (search each word or pair of words)
   const words = rawText.trim().split(/\s+/);
@@ -529,7 +535,7 @@ function appendMessage(text, type) {
   const msgs = document.getElementById('messages');
   const div = document.createElement('div');
   div.className = `message ${type}`;
-  div.innerHTML = escapeHtml(text).replace(/\n/g,'<br>') +
+  div.innerHTML = linkify(escapeHtml(text)).replace(/\n/g,'<br>') +
     `<div class="message-time">${getTime()}</div>`;
   msgs.appendChild(div);
   msgs.scrollTop = msgs.scrollHeight;
@@ -537,6 +543,7 @@ function appendMessage(text, type) {
 function escapeHtml(t) {
   return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
+function linkify(t){ return t.replace(/(https?:\/\/[^\s<]+)/g, u => `<a href="${u}" target="_blank" rel="noopener" style="color:#1d4ed8;font-weight:700;text-decoration:underline;word-break:break-all">${u}</a>`); }
 function showTyping() {
   const msgs = document.getElementById('messages');
   const el = document.createElement('div');
