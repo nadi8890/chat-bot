@@ -468,7 +468,13 @@ let awaitingDocsEmail = false;
 
 async function requestDocsLink(email) {
   try {
-    const snap = await fcol().doc('pubroster').get();
+    // הבוט אינו מגדיר fcol — הגישה כאן היא בשרשרת המלאה, כמו בשאר הקובץ
+    if (!firebase.auth().currentUser) {
+      try { await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.NONE); } catch(e) {}
+      await firebase.auth().signInAnonymously();
+    }
+    const snap = await firebase.firestore()
+      .collection('tenants').doc(TENANT).collection('data').doc('pubroster').get();
     const ms = (snap.data() || {}).mailSettings || {};
     if (!ms.gasUrl || !ms.publicToken) { console.log('docs link: mail not configured'); return; }
     await fetch(ms.gasUrl, {
