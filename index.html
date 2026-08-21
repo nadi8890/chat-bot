@@ -460,11 +460,35 @@ function getTime() {
 }
 document.getElementById('init-time').textContent = getTime();
 
+// ═══ בקשת קישור למסמכים ═══
+// הבוט אינו קורא שום מסמך. הוא רק מבקש מה-Apps Script לשלוח את
+// הקישור האישי לכתובת שהוקלדה. אם הכתובת אינה רשומה — לא נשלח דבר,
+// והבוט אינו מגלה זאת, כדי שלא ניתן יהיה לדוג כתובות.
+let awaitingDocsEmail = false;
+
+async function requestDocsLink(email) {
+  try {
+    const snap = await fcol().doc('pubroster').get();
+    const ms = (snap.data() || {}).mailSettings || {};
+    if (!ms.gasUrl || !ms.publicToken) { console.log('docs link: mail not configured'); return; }
+    await fetch(ms.gasUrl, {
+      method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({ action: 'sendLink', publicToken: ms.publicToken, email: email })
+    });
+  } catch (e) { console.log('requestDocsLink', e); }
+}
+
 function findAnswer(rawText) {
   // --- מסמכים אישיים → הפניה לפורטל המאובטח ---
-  if (/(המסמכים שלי|מסמכים שלי|רישיון נהיגה|רישיון הרכב|רישיון רכב|תעודת ביטוח|הביטוח שלי|לצפות במסמכים|לראות (?:את )?המסמכים|התיק שלי|נהלים שלי)/.test(rawText)) {
-    const link = `https://nadi8890.github.io/shamay-scan/my-docs.html?t=${encodeURIComponent(TENANT)}`;
-    return `📁 לצפייה במסמכים שלך — רישיון נהיגה, רישיון רכב, ביטוח ונהלים — היכנס/י לפורטל האישי המאובטח:\n\n${link}\n\n🔐 מזדהים עם המייל שלך (יישלח קישור כניסה, בלי סיסמה) — ורואים רק את המסמכים שלך.`;
+  if (/(המסמכים שלי|מסמכים שלי|רישיון נהיגה|רישיון הרכב|רישיון רכב|תעודת ביטוח|הביטוח שלי|לצפות במסמכים|לראות (?:את )?המסמכים|תיק שלי|תיקיה שלי)/.test(rawText)) {
+    awaitingDocsEmail = true;
+    return '📁 כדי לקבל את המסמכים שלך — הזן/י כאן את כתובת המייל שלך, ואשלח אליה קישור אישי לתיק שלך.\n\nהקישור נשלח רק לכתובת הרשומה עליך במערכת.';
+  }
+  // כתובת מייל שהוקלדה אחרי בקשת מסמכים
+  if (awaitingDocsEmail && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(rawText.trim())) {
+    awaitingDocsEmail = false;
+    requestDocsLink(rawText.trim());
+    return '📧 שולח… אם הכתובת רשומה במערכת, הקישור האישי יגיע אליה תוך רגע.\n\nלא הגיע? ייתכן שזו אינה הכתובת הרשומה עליך — פנה/י למחלקת הרכב.';
   }
   // --- Employee lookup ---
   // Try to find employee name in message (search each word or pair of words)
