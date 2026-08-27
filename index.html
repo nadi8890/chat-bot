@@ -368,7 +368,20 @@ const POLICY = [
 ];
 
 // זהות החברה (דייר) — מגיע מ-?t=... בקישור; ברירת מחדל nofar
-const TENANT = (new URLSearchParams(location.search).get('t') || 'nofar');
+// קישור בלי מזהה חברה נפל קודם ל-'nofar': שאלות ותשובות של נהג אצל
+// לקוח אחד נענו ונשמרו מול הנתונים של לקוח אחר. עדיף שהדף לא ייפתח.
+const TENANT = (new URLSearchParams(location.search).get('t') || '').trim();
+if (!TENANT) {
+  const _stop = () => { document.body.innerHTML =
+    '<div style="max-width:420px;margin:60px auto;padding:26px;border-radius:16px;background:#fff;' +
+    'font-family:Heebo,Arial,sans-serif;text-align:center;direction:rtl;box-shadow:0 8px 30px rgba(0,0,0,.12)">' +
+    '<div style="font-size:2.4rem">🔗</div>' +
+    '<h2 style="margin:10px 0 8px;font-size:1.1rem;color:#b91c1c">הקישור אינו שלם</h2>' +
+    '<p style="margin:0;color:#475569;font-size:.9rem;line-height:1.6">חסר בו מזהה החברה, ולכן לא ניתן לפתוח אותו.<br>' +
+    'בקש מקצין הבטיחות לשלוח את הקישור מחדש מתוך המערכת.</p></div>'; };
+  if (document.body) _stop(); else document.addEventListener('DOMContentLoaded', _stop);
+  throw new Error('NO_TENANT');
+}
 let VEHICLES = [];  // ריק — נטען לפי חברה מ-Firebase (בידוד רב-דיירתי)
 
 // ── סנכרון אוטומטי מול מנהל הצי (Firebase) ──
