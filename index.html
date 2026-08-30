@@ -383,6 +383,16 @@ if (!TENANT) {
   throw new Error('NO_TENANT');
 }
 let VEHICLES = [];  // ריק — נטען לפי חברה מ-Firebase (בידוד רב-דיירתי)
+// שם החברה וטלפון מחלקת הרכב של הדייר, מ-pubroster. כל עוד אלה ריקים
+// הבוט לא ממציא פרטים — הוא מפנה למחלקת הרכב בלי מספר.
+let ORG = { name: '', phone: '' };
+// למי הנהג פונה כשלבוט אין תשובה. אצל נופר זה הקצב"ת; אצל כל לקוח אחר
+// מחלקת הרכב שלו — בשום מקרה לא המספר של נופר.
+function orgContactLine() {
+  if (TENANT === 'nofar') return 'פנייה לקצב"ת: 📱 054-2840258';
+  const who = ORG.name ? ('מחלקת הרכב של ' + ORG.name) : 'מחלקת הרכב';
+  return ORG.phone ? ('פנייה ל' + who + ': 📱 ' + ORG.phone) : ('לבירורים — פנה ל' + who + '.');
+}
 
 // ── סנכרון אוטומטי מול מנהל הצי (Firebase) ──
 // הבוט טוען את רשימת הרכבים מאותו מסד נתונים שמנהל הצי שומר אליו.
@@ -420,6 +430,7 @@ let VEHICLES = [];  // ריק — נטען לפי חברה מ-Firebase (בידו
     // per-company (tenant) data; defaults to nofar (first customer).
     // קורא מהעותק הציבורי המסונן (pubroster) — בלי מידע רגיש (ת"ז/טלפון/ילדים/עבר תעבורתי)
     firebase.firestore().collection('tenants').doc(TENANT).collection('data').doc('pubroster').onSnapshot(snap => {
+      try { const _o = (snap.data() || {}).org; if (_o) ORG = { name: _o.name || '', phone: _o.phone || '' }; } catch(e) {}
       if (!snap.exists) { VEHICLES = []; return; }
       const d = snap.data();
       // תמיד מסתנכרן לרשימת החברה — כולל רשימה ריקה (בידוד: אין דליפה בין חברות)
@@ -431,6 +442,10 @@ let VEHICLES = [];  // ריק — נטען לפי חברה מ-Firebase (בידו
 })();
 
 function getCompanyInfo(company) {
+  // הטבלה שלמטה היא של נופר: אלה מנהלי הלקוח שלה אצל חברות הליסינג
+  // וספק הצמיגים שלה. לקוח אחר קיבל אותם על הרכב שלו, ואף ראה את שם
+  // החברה "נופר אנרגי" במקום שלו. עדיף בלי טלפון מאשר טלפון של חברה אחרת.
+  if (TENANT !== 'nofar') return { name: company || 'לא צוין', contact: '', tire: '' };
   const c = company.trim().replace(/\s+/g,' ');
   if (c.includes('שלמה') || c.includes('סיקסט')) return {
     name: 'שלמה סיקסט',
@@ -531,17 +546,16 @@ function findAnswer(rawText) {
       const lic = v.licDate ? `\n🪪 תוקף רישיון נהיגה: ${v.licDate}` : '';
       const km = v.nextService ? `\n🔩 טיפול הבא: ${v.nextService} ק"מ` + (v.currentKm ? ` (כיום: ${v.currentKm} ק"מ)` : '') : '';
       const insp = v.inspection && v.inspection !== '0' ? `\n🔍 ביקורת: ${v.inspection}` : '';
+      // אצל לקוח שאינו נופר אין לבוט אנשי קשר, ולכן הסעיפים האלה יורדים
+      // לגמרי במקום להופיע ריקים
+      const contactBlock = info.contact ? `\n\n📞 לתקלה / טיפול:\n${info.contact}` : '';
+      const tireBlock = info.tire ? `\n\n🔧 צמיגים:\n${info.tire}` : '';
+      const helpBlock = (contactBlock || tireBlock) ? '' : `\n\n${orgContactLine()}`;
       return `👤 ${v.name || 'לא צוין'}
 🚗 ${v.make} ${v.model} (${v.year || 'שנתון לא ידוע'})
 🔢 מס\' רכב: ${v.plate}
 🏢 חברת ליסינג: ${info.name}
-${ins}${reg}${lic}${km}${insp}
-
-📞 לתקלה / טיפול:
-${info.contact}
-
-🔧 צמיגים:
-${info.tire}`;
+${ins}${reg}${lic}${km}${insp}${contactBlock}${tireBlock}${helpBlock}`;
     }).join('\n\n---\n\n');
   }
 
@@ -559,17 +573,20 @@ ${info.tire}`;
     if (score > bestScore) { bestScore = score; best = item.answer; }
   }
   if (bestScore === 0) {
-    return `לא מצאתי תשובה מדויקת לשאלה זו. 🤔
-
-💡 אפשר לחפש לפי מספר רכב — למשל: "66020804" ואני אראה את פרטי הרכב ואיך לטפל בו.
+    // רשימת הנושאים היא של נהלי נופר; אצל לקוח אחר בסיס הידע ריק ולכן
+    // *כל* שאלה נופלת לכאן, והצעת נושאים שאין להם תשובה רק מתסכלת.
+    const topics = (TENANT === 'nofar') ? `
 
 או שאל על:
 • תקלה ברכב / תחזוקה
 • תדלוק / טעינה חשמלית
 • תאונה • החלפת צמיג
-• כבישי אגרה • שטיפומט
+• כבישי אגרה • שטיפומט` : '';
+    return `לא מצאתי תשובה מדויקת לשאלה זו. 🤔
 
-פנייה לקצב"ת: 📱 054-2840258`;
+💡 אפשר לחפש לפי מספר רכב — למשל: "66020804" ואני אראה את פרטי הרכב ואיך לטפל בו.${topics}
+
+${orgContactLine()}`;
   }
   return best;
 }
